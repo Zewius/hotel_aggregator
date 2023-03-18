@@ -1,18 +1,37 @@
 package hotel_aggregator
 
-import grails.gorm.services.Service
+import grails.gorm.transactions.ReadOnly
+import grails.gorm.transactions.Transactional
 
-@Service(Hotel)
-interface HotelService {
+class HotelService {
 
-    Hotel get(Serializable id)
+    @ReadOnly
+    Hotel getHotelById(Long id) {
+        return Hotel.get(id)
+    }
 
-    List<Hotel> list(Map args)
+    @ReadOnly
+    List<Hotel> getAllHotels() {
+        return Hotel.list()
+    }
 
-    Long count()
+    @ReadOnly
+    List<Hotel> getAllHotels(Map params) {
+        return Hotel.list(params)
+    }
 
-    void delete(Serializable id)
+    @ReadOnly
+    Long count() {
+        return Hotel.count()
+    }
 
-    Hotel save(Hotel hotel)
+    @Transactional
+    Hotel saveHotel(Hotel hotel) {
+        return hotel.save()
+    }
 
+    @Transactional
+    void deleteHotel(Hotel hotel) {
+        hotel.delete()
+    }
 }

@@ -1,7 +1,6 @@
 package hotel_aggregator
 
 import grails.validation.ValidationException
-import static org.springframework.http.HttpStatus.*
 
 // TODO: Зарефачить контроллер
 class HotelController {
@@ -13,15 +12,15 @@ class HotelController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond hotelService.list(params), model: [hotelCount: hotelService.count()]
+        respond hotelService.getAllHotels(params), model: [hotelCount: hotelService.count()]
     }
 
     def show(Long id) {
-        respond hotelService.get(id)
+        respond hotelService.getHotelById(id)
     }
 
     def create() {
-        [hotel: new Hotel(), countries: countryService.list()]
+        [hotel: new Hotel(), countries: countryService.getAllCounties()]
     }
 
     def save(Hotel hotel) {
@@ -31,7 +30,7 @@ class HotelController {
         }
 
         try {
-            hotelService.save(hotel)
+            hotelService.saveHotel(hotel)
         } catch (ValidationException e) {
             respond hotel.errors, view: 'create'
             return
@@ -42,7 +41,7 @@ class HotelController {
     }
 
     def edit(Long id) {
-        [hotel: hotelService.get(id), countries: countryService.list()]
+        [hotel: hotelService.getHotelById(id), countries: countryService.getAllCounties()]
     }
 
     def update(Hotel hotel) {
@@ -52,7 +51,7 @@ class HotelController {
         }
 
         try {
-            hotelService.save(hotel)
+            hotelService.saveHotel(hotel)
         } catch (ValidationException e) {
             respond hotel.errors, view: 'edit'
             return
@@ -62,13 +61,13 @@ class HotelController {
         redirect hotel
     }
 
-    def delete(Long id) {
-        if (id == null) {
+    def delete(Hotel hotel) {
+        if (hotel == null) {
             notFound()
             return
         }
 
-        hotelService.delete(id)
+        hotelService.deleteHotel(hotel)
 
         flash.message = "Отель успешно удалён"
         redirect action: "index", method: "GET"

@@ -7,7 +7,7 @@ class Country {
     String capital
 
     static constraints = {
-        name nullable: false, unique: true, size: 1..255
-        capital nullable: false, size: 1..128
+        name nullable: false, unique: true, size: 3..255
+        capital nullable: false, size: 3..128
     }
 }

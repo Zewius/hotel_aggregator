@@ -1,18 +1,37 @@
 package hotel_aggregator
 
-import grails.gorm.services.Service
+import grails.gorm.transactions.ReadOnly
+import grails.gorm.transactions.Transactional
 
-@Service(Country)
-interface CountryService {
+class CountryService {
 
-    Country get(Serializable id)
+    @ReadOnly
+    Country getCountryById(Long id) {
+        return Country.get(id)
+    }
 
-    List<Country> list(Map args)
+    @ReadOnly
+    List<Country> getAllCounties() {
+        return Country.list()
+    }
 
-    Long count()
+    @ReadOnly
+    List<Country> getAllCounties(Map params) {
+        return Country.list(params)
+    }
 
-    void delete(Serializable id)
+    @ReadOnly
+    Long count() {
+        return Country.count()
+    }
 
-    Country save(Country country)
+    @Transactional
+    Country saveCountry(Country country) {
+        return country.save()
+    }
 
+    @Transactional
+    void deleteCountry(Country country) {
+        country.delete()
+    }
 }

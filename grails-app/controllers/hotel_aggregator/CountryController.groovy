@@ -12,11 +12,11 @@ class CountryController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond countryService.list(params), model:[countryCount: countryService.count()]
+        respond countryService.getAllCounties(params), model:[countryCount: countryService.count()]
     }
 
     def show(Long id) {
-        respond countryService.get(id)
+        respond countryService.getCountryById(id)
     }
 
     def create() {
@@ -30,7 +30,7 @@ class CountryController {
         }
 
         try {
-            countryService.save(country)
+            countryService.saveCountry(country)
         } catch (ValidationException e) {
             respond country.errors, view:'create'
             return
@@ -41,7 +41,7 @@ class CountryController {
     }
 
     def edit(Long id) {
-        respond countryService.get(id)
+        respond countryService.getCountryById(id)
     }
 
     def update(Country country) {
@@ -51,7 +51,7 @@ class CountryController {
         }
 
         try {
-            countryService.save(country)
+            countryService.saveCountry(country)
         } catch (ValidationException e) {
             respond country.errors, view:'edit'
             return
@@ -61,12 +61,12 @@ class CountryController {
         redirect country
     }
 
-    def delete(Long id) {
+    def delete(Country country) {
         if (id == null) {
             notFound()
             return
         }
-        countryService.delete(id)
+        countryService.deleteCountry(country)
 
         flash.message = "Страна успешно удалена"
         redirect action:"index", method:"GET"

@@ -6,7 +6,7 @@ class SearchController {
     CountryService countryService
 
     def index() {
-        render (view: "index", model: [countryList: countryService.list()])
+        render (view: "index", model: [countryList: countryService.getAllCounties()])
     }
 
     // TODO: Получать информацию о стране через countryController
@@ -16,6 +16,6 @@ class SearchController {
         render view: "index", model: [
                 result: result,
                 resultCount: result.totalCount,
-                countryList: countryService.list()]
+                countryList: countryService.getAllCounties()]
     }
 }
