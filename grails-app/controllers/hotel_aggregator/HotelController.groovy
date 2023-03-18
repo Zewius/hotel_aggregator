@@ -71,7 +71,6 @@ class HotelController {
 
         flash.message = "Отель успешно удалён"
         redirect action: "index", method: "GET"
-
     }
 
     protected void notFound() {

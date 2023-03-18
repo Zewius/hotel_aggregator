@@ -62,7 +62,7 @@ class CountryController {
     }
 
     def delete(Country country) {
-        if (id == null) {
+        if (country == null) {
             notFound()
             return
         }
