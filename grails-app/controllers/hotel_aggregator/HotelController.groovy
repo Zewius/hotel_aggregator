@@ -12,6 +12,9 @@ class HotelController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
+        if (countryService.getAllCounties().empty) {
+            flash.message = "Список стран пуст, вы не сможете добавить отель"
+        }
         respond hotelService.getAllHotels(params), model: [hotelCount: hotelService.count()]
     }
 
@@ -20,7 +23,11 @@ class HotelController {
     }
 
     def create() {
-        [hotel: new Hotel(), countries: countryService.getAllCounties()]
+        List<Country> countries = countryService.getAllCounties()
+        if (countries.empty) {
+            redirect action: "index", method: "GET"
+        }
+        [hotel: new Hotel(), countries: countries]
     }
 
     def save(Hotel hotel) {
@@ -31,8 +38,8 @@ class HotelController {
 
         try {
             hotelService.saveHotel(hotel)
-        } catch (ValidationException e) {
-            respond hotel.errors, view: 'create'
+        } catch (Exception e) {
+            respond hotel.errors, view: 'create', model: [countries: countryService.getAllCounties()]
             return
         }
 
@@ -53,7 +60,7 @@ class HotelController {
         try {
             hotelService.saveHotel(hotel)
         } catch (ValidationException e) {
-            respond hotel.errors, view: 'edit'
+            respond hotel.errors, view: 'edit', model: [countries: countryService.getAllCounties()]
             return
         }
 

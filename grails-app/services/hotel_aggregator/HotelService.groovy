@@ -2,6 +2,7 @@ package hotel_aggregator
 
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
+import grails.validation.ValidationException
 
 class HotelService {
 
@@ -27,7 +28,12 @@ class HotelService {
 
     @Transactional
     Hotel saveHotel(Hotel hotel) {
-        return hotel.save()
+        if (hotel.save()) {
+            return hotel
+        }
+        else {
+            throw new ValidationException("Запись не прошла валидацию", hotel.errors)
+        }
     }
 
     @Transactional

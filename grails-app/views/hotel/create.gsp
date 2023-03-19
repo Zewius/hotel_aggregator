@@ -29,28 +29,31 @@
                         <div class="message">${flash.message}</div>
                     </g:if>
 
-                    <g:hasErrors bean="${this.hotel}">
-                        <ul class="errors">
-                            <g:eachError bean="${this.hotel}" var="error">
-                                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message
-                                        error="${error}"/></li>
-                            </g:eachError>
-                        </ul>
-                    </g:hasErrors>
-
                     <g:form resource="${this.hotel}" method="POST">
                         <div class="form-group p-4">
                             <label for="name">Название</label>
-                            <g:textField name="name" id="name" required="true"
+                            <g:textField name="name" id="name" required="true" value="${this.hotel.name ?: ""}"
                                          placeholder="Введите название отеля" class="form-control"/>
+                            <g:hasErrors bean="${this.hotel}" field="name">
+                                <div class="errors">Необходимо ввести корректное значение (от 3 букв), а также убедитесь, что название отеля уникально в пределах страны</div>
+                            </g:hasErrors>
                             <label for="country" class="mt-2">Страна</label>
-                            <g:select name="country" from="${this.countries}" optionKey="id" optionValue="name"
-                                      class="custom-select"/>
+                            <g:select name="country" from="${this.countries}" value="${this.hotel.country?.id ?: 1}"
+                                      optionKey="id" optionValue="name" class="custom-select"/>
+                            <g:hasErrors bean="${this.hotel}" field="country">
+                                <div class="errors">Необходимо выбрать страну из раскрывающего списка</div>
+                            </g:hasErrors>
                             <label for="stars" class="mt-2">Кол-во звёзд</label>
-                            <g:select name="stars" from="${1..5}" class="custom-select"/>
+                            <g:select name="stars" from="${1..5}" class="custom-select" value="${this.hotel.stars ?: 1}"/>
+                            <g:hasErrors bean="${this.hotel}" field="stars">
+                                <div class="errors">Необходимо указать количество звёзд отеля из раскрывающего списка</div>
+                            </g:hasErrors>
                             <label for="website" class="mt-2">Веб-сайт</label>
                             <g:textField name="website"
                                          placeholder="Введите адрес страницы" class="form-control"/>
+                            <g:hasErrors bean="${this.hotel}" field="website">
+                                <div class="errors">Введите корректный адрес веб-сайта (должен начинаться на 'http://' или 'https://'</div>
+                            </g:hasErrors>
                             <div class="col text-center">
                                 <g:submitButton name="create" class="btn btn-primary btn-lg w-25 mt-4" value="Создать"/>
                             </div>

@@ -44,6 +44,7 @@
                                                                   id="${this.hotel.country.id}">${this.hotel.country.name}</g:link></p>
 
                         <p class="h5">Количество звёзд: ${this.hotel.stars}</p>
+
                         <p class="h5">Веб-сайт: ${this.hotel.website}</p>
                     </div>
                 </div>
