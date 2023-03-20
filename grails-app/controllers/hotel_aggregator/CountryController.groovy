@@ -3,7 +3,6 @@ package hotel_aggregator
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
-// TODO: Зарефачить контроллер
 class CountryController {
 
     CountryService countryService

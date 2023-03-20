@@ -35,7 +35,8 @@
                             <g:textField name="name" id="name" required="true" value="${this.hotel.name ?: ""}"
                                          placeholder="Введите название отеля" class="form-control"/>
                             <g:hasErrors bean="${this.hotel}" field="name">
-                                <div class="errors">Необходимо ввести корректное значение (от 3 букв), а также убедитесь, что название отеля уникально в пределах страны</div>
+                                <div class="errors">Необходимо ввести корректное значение (от 3 букв).
+                                Также убедитесь, что название отеля уникально в пределах страны</div>
                             </g:hasErrors>
                             <label for="country" class="mt-2">Страна</label>
                             <g:select name="country" from="${this.countries}" value="${this.hotel.country?.id ?: 1}"

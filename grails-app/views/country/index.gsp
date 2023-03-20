@@ -28,6 +28,8 @@
                         <div class="message">${flash.message}</div>
                     </g:if>
 
+                    <p class="text-center">Количество стран: ${countryCount}</p>
+
                     <table>
                         <thead>
                         <tr>

@@ -29,6 +29,8 @@
                         <div class="message">${flash.message}</div>
                     </g:if>
 
+                    <p class="text-center">Количество отелей: ${hotelCount}</p>
+
                     <table>
                         <thead>
                         <tr>
