@@ -2,7 +2,6 @@ package hotel_aggregator
 
 import grails.gorm.transactions.ReadOnly
 import grails.gorm.transactions.Transactional
-import grails.validation.ValidationException
 
 class CountryService {
 
@@ -28,12 +27,7 @@ class CountryService {
 
     @Transactional
     Country saveCountry(Country country) {
-        if (country.save()) {
-            return country
-        }
-        else {
-            throw new ValidationException("Запись не прошла валидацию", country.errors)
-        }
+        return country.save(failOnError: true)
     }
 
     @Transactional

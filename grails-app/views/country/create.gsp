@@ -35,7 +35,8 @@
                             <g:textField name="name" id="name" required="true" value="${this.country.name ?: ""}"
                                          placeholder="Введите название страны" class="form-control"/>
                             <g:hasErrors bean="${this.country}" field="name">
-                                <div class="errors">Необходимо ввести корректное значение (от 3 букв)</div>
+                                <div class="errors">Необходимо ввести корректное значение (от 3 букв).
+                                Также убедитесь, что название страны уникально</div>
                             </g:hasErrors>
                             <label for="capital" class="mt-2">Столица</label>
                             <g:textField name="capital" id="capital" required="true" value="${this.country.capital ?: ""}"

@@ -28,12 +28,7 @@ class HotelService {
 
     @Transactional
     Hotel saveHotel(Hotel hotel) {
-        if (hotel.save()) {
-            return hotel
-        }
-        else {
-            throw new ValidationException("Запись не прошла валидацию", hotel.errors)
-        }
+        return hotel.save(failOnError: true)
     }
 
     @Transactional
